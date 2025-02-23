@@ -15,6 +15,6 @@ namespace AspSecond.Models
         [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
 
-        public string OtherInfo { get; set; }
+        public string? OtherInfo { get; set; }
     }
 }

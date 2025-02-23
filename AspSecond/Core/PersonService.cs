@@ -19,7 +19,7 @@ namespace AspSecond.Core
 
             var pr = new Person
             {
-                Id = person.Id,
+                GuidId = person.Id,
                 Name = person.Name,
                 Surname = person.Surname,
                 Birthday = person.Birthday,
@@ -47,7 +47,7 @@ namespace AspSecond.Core
                     Birthday = person.Birthday,
                     Name = person.Name,
                     Surname = person.Surname,
-                    Id = person.Id,
+                    Id = person.GuidId,
                     OtherInfo = person.OtherInfo
                 });
             }
@@ -64,7 +64,7 @@ namespace AspSecond.Core
         {
             var pr = new Person
             {
-                Id = person.Id,
+                GuidId = person.Id,
                 Name = person.Name,
                 Surname = person.Surname,
                 Birthday = person.Birthday,

@@ -7,6 +7,8 @@ namespace AspSecond.Pages
 {
     public class PersonModel : PageModel
     {
+        [BindProperty]
+        public PersonDto Person { get; set; }
         public List<PersonDto> Persons { get; set; }
 
         private readonly IPersonService _personService;
@@ -21,5 +23,18 @@ namespace AspSecond.Pages
             Persons = await _personService.GetAllAsync();
         }
 
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            await _personService.AddAsync(Person);
+
+            return RedirectToPage("/Person");
+
+            //Persons = await _personService.GetAllAsync();
+        }
     }
 }

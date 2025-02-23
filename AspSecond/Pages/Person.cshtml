@@ -3,4 +3,75 @@
 @{
 }
 
+<div>
+    <h1>Input Form!</h1>
+    <form method="post">
+        <div>
+            <label asp-for="Person.Name"> Enter student's Name:</label>
+            <input asp-for="Person.Name" class="form-control" required/>
+            <span asp-validation-for="Person.Name" class="text-danger"></span>
+        </div>
 
+        <div>
+            <label asp-for="Person.Surname"> Enter student's Surname:</label>
+            <input asp-for="Person.Surname" class="form-control" required />
+            <span asp-validation-for="Person.Surname" class="text-danger"></span>
+
+        </div>
+
+        <div>
+            <label asp-for="Person.Birthday"> Enter student's birthday:</label>
+            <input asp-for="Person.Birthday" class="form-control" required />
+            <span asp-validation-for="Person.Birthday" class="text-danger"></span>
+
+        </div>
+
+        <div>
+            <label asp-for="Person.OtherInfo"> Enter additional information:</label>
+            <input asp-for="Person.OtherInfo" class="form-control" />
+            <span asp-validation-for="Person.OtherInfo" class="text-danger"></span>
+
+        </div>
+
+        <button type="submit" class="btnSbmt">Submit</button>
+    </form>
+
+
+    <h1>Data from DB:</h1>
+    <ol>
+    @foreach (var item in Model.Persons)
+    {   <li>
+            <ul>
+                    <li>Name: @item.Name </li>
+                    <li>Surname: @item.Surname </li>
+                    <li>Birthday: @item.Birthday </li>
+                    <li>Other information: @item.OtherInfo </li>
+            </ul>
+        </li> 
+    }
+    </ol>
+</div>
+
+<style>
+    .btnSbmt {
+        background-color:dodgerblue;
+        color:darkblue;
+        border-radius:7px;
+        text-align:center;
+        align-self:center;
+    }
+
+    div {
+        padding: 5px;
+        margin:5px;
+    }
+
+    li {
+        margin: 10px;
+        padding: 5px;
+    }
+    form {
+        padding: 10 px;
+        border-bottom: solid 2px black;
+    }
+</style>

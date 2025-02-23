@@ -9,7 +9,8 @@ namespace AspSecond.DAL.Entities
 {
     public class Person
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
+        public Guid GuidId { get; set; }
 
         public string Name { get; set; }
 
@@ -17,6 +18,6 @@ namespace AspSecond.DAL.Entities
 
         public DateTime Birthday { get; set; }
 
-        public string OtherInfo { get; set; }
+        public string? OtherInfo { get; set; }
     }
 }
