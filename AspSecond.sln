@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspSecond", "AspSecond\AspSecond.csproj", "{06AC66CD-0FDB-43C5-A1C7-AAB218C1A140}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspSecond", "AspSecond\AspSecond.csproj", "{06AC66CD-0FDB-43C5-A1C7-AAB218C1A140}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A2CF00F9-083D-46F1-9778-B6EE7E08B680} = {A2CF00F9-083D-46F1-9778-B6EE7E08B680}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspSecond.DAL", "AspSecond.DAL\AspSecond.DAL.csproj", "{A2CF00F9-083D-46F1-9778-B6EE7E08B680}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspSecond.DAL", "AspSecond.DAL\AspSecond.DAL.csproj", "{A2CF00F9-083D-46F1-9778-B6EE7E08B680}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

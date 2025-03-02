@@ -1,0 +1,16 @@
+﻿@page
+@model AspSecond.Pages.EventModel
+@{
+}
+
+<div>
+    <form method="post">
+        <label asp-for="Text">
+        </label>
+        <input type="text" asp-for="Text" />
+        <button type="submit">Send</button>
+    </form>
+
+    <p>@Model.Text</p>
+</div>
+
