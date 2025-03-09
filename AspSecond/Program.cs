@@ -4,6 +4,7 @@ using AspSecond.DAL;
 using AspSecond.DAL.Abstract;
 using AspSecond.DAL.Repository;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http.Headers;
 
 
 namespace AspSecond
@@ -20,7 +21,15 @@ namespace AspSecond
             builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conString));
 
             builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+            builder.Services.AddScoped<IBookRepository, BookRepository>();
+            
             builder.Services.AddScoped<IPersonService, PersonService>();
+            builder.Services.AddScoped<IBookService, BookService>();
+            builder.Services.AddHttpClient<OpenLibraryService>(client =>
+            {
+                client.BaseAddress = new Uri("https://openlibrary.org");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            });
 
             var app = builder.Build();
 

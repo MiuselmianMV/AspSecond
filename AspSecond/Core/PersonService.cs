@@ -2,7 +2,7 @@
 using AspSecond.DAL.Abstract;
 using AspSecond.DAL.Entities;
 using AspSecond.Models;
-using System.ComponentModel.DataAnnotations;
+
 
 namespace AspSecond.Core
 {

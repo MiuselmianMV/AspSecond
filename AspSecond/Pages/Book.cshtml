@@ -1,0 +1,98 @@
+﻿@page
+@model AspSecond.Pages.BookModel
+@{
+}
+
+<h1>Book input form</h1>
+<div class="left-box">
+    <form method="post">
+        <div>
+            <label asp-for="Book.Title">
+                Input Title:
+            </label>
+            <input asp-for="Book.Title" class="form-control" required/>
+            <span asp-validation-for="Book.Title" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Book.Author">
+                Input Author:
+            </label>
+            <input asp-for="Book.Author" class="form-control" required />
+            <span asp-validation-for="Book.Author" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Book.Style">
+                Input Style:
+            </label>
+            <input asp-for="Book.Style" class="form-control" required />
+            <span asp-validation-for="Book.Style" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Book.PublicationDate">
+                Input Publication Year:
+            </label>
+            <input asp-for="Book.PublicationDate" class="form-control" required />
+            <span asp-validation-for="Book.PublicationDate" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Book.OtherInfo">
+                Input Some additional information about the book:
+            </label>
+            <input asp-for="Book.OtherInfo" />
+        </div>
+        <input type="hidden" name="Form1Submitted" value="true"/>
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+<h1>Information from DB:</h1>
+<div>
+    <ol>
+        @foreach(var it in Model.Books)
+        {
+            <li>
+                <ul>
+                    <li>
+                        Title: @it.Title
+                    </li>
+                    <li>
+                        Author: @it.Author
+                    </li>
+                    <li>
+                        Publication year: @it.PublicationDate
+                    </li>
+                    <li>
+                        Style : @it.Style
+                    </li>
+                    <li>
+                        Additional information: @it.OtherInfo
+                    </li>
+                </ul>
+            </li>
+        }
+    </ol>
+</div>
+
+ <style>
+     .left-box {
+         width:50%;
+     }
+
+    div {
+        padding: 5px;
+        margin: 5px;
+    }
+
+    li {
+        margin: 10px;
+        padding: 5px;
+    }
+
+    form {
+        padding: 10 px;
+        border-bottom: solid 2px black;
+    }
+</style>
