@@ -10,13 +10,13 @@ namespace AspSecond.Models
         public string? Title { get; set; }
         
         [Required]
-        public string? Author { get; set; }
+        public string? Author_name { get; set; }
         
         [Required]
         public string? Style { get; set; }
         
         [Required]
-        public int? PublicationDate { get; set; }
+        public int? First_publish_year { get; set; }
         public string? OtherInfo { get; set; }
     }
 }

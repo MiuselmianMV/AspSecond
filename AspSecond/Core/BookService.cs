@@ -23,9 +23,9 @@ namespace AspSecond.Core
             {
                 Id = book.Id,
                 Title = book.Title,
-                Author = book.Author,
+                Author = book.Author_name,
                 Style = book.Style,
-                PublicationDate = book.PublicationDate,
+                PublicationDate = book.First_publish_year,
                 OtherInfo = book.OtherInfo
             };
             
@@ -50,9 +50,9 @@ namespace AspSecond.Core
                 {
                     Id = book.Id,
                     Title = book.Title,
-                    Author = book.Author,
+                    Author_name = book.Author,
                     Style = book.Style,
-                    PublicationDate = book.PublicationDate,
+                    First_publish_year = book.PublicationDate,
                     OtherInfo = book.OtherInfo
                 });
             }
@@ -73,9 +73,9 @@ namespace AspSecond.Core
             {
                 Id = book.Id,
                 Title = book.Title,
-                Author = book.Author,
+                Author = book.Author_name,
                 Style = book.Style,
-                PublicationDate = book.PublicationDate,
+                PublicationDate = book.First_publish_year,
                 OtherInfo = book.OtherInfo
             };
             await _bookRepository.UpdateAsync(bk);

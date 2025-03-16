@@ -3,80 +3,134 @@
 @{
 }
 
-<h1>Book input form</h1>
-<div class="left-box">
-    <form method="post">
-        <div>
-            <label asp-for="Book.Title">
-                Input Title:
-            </label>
-            <input asp-for="Book.Title" class="form-control" required/>
-            <span asp-validation-for="Book.Title" class="text-danger"></span>
-        </div>
+<h1 style="text-align:center">Book input form</h1>
+<div style="display:flex; flex-direction:row">
 
-        <div>
-            <label asp-for="Book.Author">
-                Input Author:
-            </label>
-            <input asp-for="Book.Author" class="form-control" required />
-            <span asp-validation-for="Book.Author" class="text-danger"></span>
-        </div>
 
-        <div>
-            <label asp-for="Book.Style">
-                Input Style:
-            </label>
-            <input asp-for="Book.Style" class="form-control" required />
-            <span asp-validation-for="Book.Style" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Book.PublicationDate">
-                Input Publication Year:
-            </label>
-            <input asp-for="Book.PublicationDate" class="form-control" required />
-            <span asp-validation-for="Book.PublicationDate" class="text-danger"></span>
-        </div>
+    <div class="left-box">
+        <form method="post" asp-page-handler="First">
+            <div>
+                <label asp-for="Book.Title">
+                    Input Title:
+                </label>
+                <input asp-for="Book.Title" class="form-control" />
+                <span asp-validation-for="Book.Title" class="text-danger"></span>
+            </div>
 
-        <div>
-            <label asp-for="Book.OtherInfo">
-                Input Some additional information about the book:
-            </label>
-            <input asp-for="Book.OtherInfo" />
-        </div>
-        <input type="hidden" name="Form1Submitted" value="true"/>
-        <button type="submit">Send</button>
-    </form>
+            <div>
+                <label asp-for="Book.Author_name">
+                    Input Author:
+                </label>
+                <input asp-for="Book.Author_name" class="form-control"  />
+                <span asp-validation-for="Book.Author_name" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Book.Style">
+                    Input Style:
+                </label>
+                <input asp-for="Book.Style" class="form-control"  />
+                <span asp-validation-for="Book.Style" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Book.First_publish_year">
+                    Input Publication Year:
+                </label>
+                <input asp-for="Book.First_publish_year" class="form-control"  />
+                <span asp-validation-for="Book.First_publish_year" class="text-danger"></span>
+            </div>
+
+            <div>
+                <label asp-for="Book.OtherInfo">
+                    Input Some additional information about the book:
+                </label>
+                <input asp-for="Book.OtherInfo" />
+            </div>
+@*             <input type="hidden" name="Form1Submitted" value="true"/> *@
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <div class="right-box">
+        <form method="post" asp-page-handler="Second">
+            <div>
+                <label asp-for="Title">
+                    Input the name of the book to find on the site:
+                </label>
+                <input asp-for="Title" />
+            </div>
+ @*            <input type="hidden" name="Form2Submitted" value="true" /> *@
+            <button type="submit">Find</button>
+        </form>
+    </div>
 </div>
 
-<h1>Information from DB:</h1>
-<div>
-    <ol>
-        @foreach(var it in Model.Books)
-        {
-            <li>
-                <ul>
+ <div style="display:flex; flex-direction:row">
+    <div class="left-box">
+        <h1>Information from DB:</h1>
+        <ol>
+            @foreach (var it in Model.Books)
+            {
+                <li>
+                    <ul>
+                        <li>
+                            Title: @it.Title
+                        </li>
+                        <li>
+                            Author: @it.Author_name
+                        </li>
+                        <li>
+                            Publication year: @it.First_publish_year
+                        </li>
+                        <li>
+                            Style : @it.Style
+                        </li>
+                        <li>
+                            Additional information: @it.OtherInfo
+                        </li>
+                    </ul>
+                </li>
+            }
+        </ol>
+    </div>
+
+    <div class="right-box">
+        <h1>Information got with API:</h1>
+        <div>
+            <ol>
+                @foreach (var it in Model.BooksFromApi)
+                {
                     <li>
-                        Title: @it.Title
+                        <ul>
+                            <li>
+                                Title: @it.Title
+                            </li>
+                            <li>
+                                Author: @it.Author_name
+                            </li>
+                            <li>
+                                Publication year: @it.First_publish_year
+                            </li>
+                            <li>
+                                <button>
+
+                                </button>
+                            </li>
+                        </ul>
                     </li>
-                    <li>
-                        Author: @it.Author
-                    </li>
-                    <li>
-                        Publication year: @it.PublicationDate
-                    </li>
-                    <li>
-                        Style : @it.Style
-                    </li>
-                    <li>
-                        Additional information: @it.OtherInfo
-                    </li>
-                </ul>
-            </li>
-        }
-    </ol>
+                }
+            </ol>
+        </div>
+    </div>
 </div>
+
 
  <style>
+     .right-box {
+         width:50%;
+         border-left:2px black solid;
+     }
+
      .left-box {
          width:50%;
      }
@@ -93,6 +147,5 @@
 
     form {
         padding: 10 px;
-        border-bottom: solid 2px black;
     }
 </style>
