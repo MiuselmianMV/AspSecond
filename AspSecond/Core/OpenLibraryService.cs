@@ -14,9 +14,9 @@ namespace AspSecond.Core
             _httpClient = httpClient;
         }
 
-        public async Task<List<BookDto>> GetBookByNameAsync(string query)
+        public async Task<List<BookDto>> GetBookByNameAsync(string query = "")
         {
-            var response = await _httpClient.GetAsync($"/search.json?q=harry+potter&format=json&jscmd=data");
+            var response = await _httpClient.GetAsync($"/search.json?q={query.Replace(" ", "+")}&format=json&jscmd=data");
             response.EnsureSuccessStatusCode();
             
             var content = await response.Content.ReadAsStringAsync();
@@ -31,9 +31,9 @@ namespace AspSecond.Core
             var books = new List<BookDto>();
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var document = JsonDocument.Parse(json);
-
+            JsonElement contentArray = new JsonElement();
             var root = document.RootElement;
-            if (!root.TryGetProperty("docs", out var contentArray)
+            if (!root.TryGetProperty("docs", out contentArray)
                 || contentArray.ValueKind != JsonValueKind.Array
                 || contentArray.GetArrayLength() == 0)
             {

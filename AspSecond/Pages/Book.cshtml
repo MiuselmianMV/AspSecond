@@ -61,7 +61,15 @@
             </div>
  @*            <input type="hidden" name="Form2Submitted" value="true" /> *@
             <button type="submit">Find</button>
+
         </form>
+       
+        <span>
+            @Model.BooksNotFoundErrorMessage
+        </span>
+
+       
+
     </div>
 </div>
 
@@ -112,9 +120,12 @@
                                 Publication year: @it.First_publish_year
                             </li>
                             <li>
-                                <button>
-
-                                </button>
+                                <form method="post" asp-page-handler="AddToDB">
+                                    <input type="hidden" value="@it.Title" name="book.Title" />
+                                    <input type="hidden" value="@it.Author_name" name="book.Author_name" />
+                                    <input type="hidden" value="@it.First_publish_year" name="book.First_publish_year" />
+                                    <button type="submit">Add to DB</button>
+                                </form>
                             </li>
                         </ul>
                     </li>
