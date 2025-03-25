@@ -63,7 +63,7 @@
             <button type="submit">Find</button>
 
         </form>
-       
+ 
         <span>
             @Model.BooksNotFoundErrorMessage
         </span>
@@ -106,7 +106,7 @@
         <h1>Information got with API:</h1>
         <div>
             <ol>
-                @foreach (var it in Model.BooksFromApi)
+                @foreach (var it in Model.BooksFromApi.Books)
                 {
                     <li>
                         <ul>
@@ -134,6 +134,7 @@
         </div>
     </div>
 </div>
+
 
 
  <style>

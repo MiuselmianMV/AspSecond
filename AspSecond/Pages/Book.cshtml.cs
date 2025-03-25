@@ -1,5 +1,7 @@
 using AspSecond.Abstract;
 using AspSecond.Models;
+using AspSecond.Optimization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
@@ -14,13 +16,13 @@ namespace AspSecond.Pages
         [BindProperty]
         public string Title { get; set; } = string.Empty;
         public List<BookDto> Books { get; set; } = new List<BookDto>();
-        public List<BookDto> BooksFromApi { get; set; } = new List<BookDto>();
+        public BooksContainer BooksFromApi { get; set; } = new BooksContainer();
         public string BooksNotFoundErrorMessage { get; set; } = string.Empty;
 
         private readonly IBookService _bookService;
         private readonly IOpenLibraryService _openLibraryService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private string? cookieValue;
+
 
         public BookModel(IBookService bookService, IOpenLibraryService openLibraryService, IHttpContextAccessor httpContextAccessor)
         {
@@ -31,33 +33,49 @@ namespace AspSecond.Pages
 
         public async Task OnGet()
         {
-            //IsFoundBooksLst = true;
             Books = await _bookService.GetAllAsync();
-            cookieValue = _httpContextAccessor.HttpContext.Request.Cookies["BooksFromApi"] ?? string.Empty;
-            if (cookieValue != string.Empty && cookieValue != "[]")
+
+            var requestCookies = _httpContextAccessor.HttpContext.Request.Cookies;
+            var responseCookies = _httpContextAccessor.HttpContext.Response.Cookies;
+
+            bool isNotFirstVisit = requestCookies.ContainsKey("FirstVisit");
+
+            if (isNotFirstVisit)
             {
-                BooksFromApi = JsonSerializer.Deserialize<List<BookDto>>(cookieValue) ?? new List<BookDto>();
+
+                var result = BooksFromApi.UpdateBooksFromCookies(_httpContextAccessor);
+                if (result == 0)
+                {
+                    BooksNotFoundErrorMessage = "Невірно введена назва книги";
+                }
             }
             else
             {
-                BooksNotFoundErrorMessage = "Невірно введена назва книги";
+                responseCookies.Append("FirstVisit", "true", new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    Expires = DateTime.UtcNow.AddHours(1)
+                });
             }
+
         }
 
         public async Task<IActionResult> OnPostAddToDBAsync(BookDto book)
         {
-            cookieValue = _httpContextAccessor.HttpContext.Request.Cookies["BooksFromApi"] ?? string.Empty;
-            BooksFromApi = JsonSerializer.Deserialize<List<BookDto>>(cookieValue) ?? new List<BookDto>();
-            foreach (var it in BooksFromApi)
-            {
-                if (it.Title == book.Title)
-                {
-                    BooksFromApi.Remove(it);
-                    break;
-                }
-            }
+
+            BooksFromApi.UpdateBooksFromCookies(_httpContextAccessor);
+            //foreach (var it in BooksFromApi.Books)
+            //{
+            //    if (it.Title == book.Title)
+            //    {
+            //        BooksFromApi.Books.Remove(it);
+            //        break;
+            //    }
+            //}
+            BooksFromApi.Books.RemoveAll(it => it.Title == book.Title);
             ClearCookies();
-            RewriteCookiesAsync(BooksFromApi);
+            RewriteCookiesAsync(BooksFromApi.Books);
             await _bookService.AddAsync(book);
 
             return RedirectToPage("/Book");
@@ -65,7 +83,6 @@ namespace AspSecond.Pages
 
         public async Task<IActionResult> OnPostFirstAsync()
         {
-            BooksNotFoundErrorMessage = string.Empty;
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -95,7 +112,7 @@ namespace AspSecond.Pages
             return RedirectToPage("/Book");
         }
 
-        private async void RewriteCookiesAsync(List<BookDto> books)
+        private async Task RewriteCookiesAsync(List<BookDto> books)
         {
             string booksJson = JsonSerializer.Serialize(books);
 
